@@ -1,0 +1,132 @@
+CLASS PhoneBookApp (like a magical book)
+     contactList: a list to hold all our friends
+    contactingList: a list that shows our friends
+    searchingField: a box to type in what we want to find
+     categoryBox: a box to pick friend types (like family or friends)
+     phoneBook: our special book that holds all the contacts
+
+    FUNCTION PhoneBookApp() (this is where we set everything up)
+        SET the window title to "Phone Book" (our magical book)
+        SET the size of the window (it’s not too big or too small)
+        MAKE sure the window can’t be resized (we want it just right)
+
+        CREATE our special phoneBook
+
+
+         searchPanel = a new area for searching
+        SET the title of this area to "Search Contacts"
+
+        
+        searchingField = a box that says "Search here..."
+        CHANGE the color of the text to GRAY
+
+        ADD magic that happens when you click in the search box
+            WHEN you click in:
+                IF the box says "Search here...":
+                    CLEAR the box and change the text color to BLACK
+            WHEN you click out:
+                IF the box is empty:
+                    SET the box to say "Search here..." and make it GRAY again
+
+        ADD magic to searchingField that looks for friends when you type
+            CALL searchContacts() (let’s find friends!)
+
+        ADD searchFingield to the searchPanel
+
+
+        categories = ["All", "Family", "Friends", "Work"]
+        categoryBox = a box to pick from the categories
+        ADD magic that happens when you pick a category
+            CALL searchContacts()
+
+        ADD categoryBox to the searchPanel
+
+        ADD searchPanel to our magical window
+
+       
+        contactListModel = a new empty list for friends
+        contactList = a list that shows all our friends
+        LOAD friends into contactList (let’s see who we have!)
+
+        SCROLL_PANE scrollPane = a magical window that holds the contact list
+        ADD scrollPane to our main window
+
+        
+        PANEL buttonPanel = a new area for buttons
+
+        BUTTON addButton = a button that says "Add Contact"
+        ADD magic to addButton to let you add a friend
+            CALL addNewContact()
+
+        BUTTON updateButton = a button that says "Update Contact"
+        ADD magic to updateButton to let you change a friend's info
+            CALL updateContact()
+
+        BUTTON deleteButton = a button that says "Delete Contact"
+        ADD magic to deleteButton to let you remove a friend
+            CALL deleteContact()
+
+        ADD buttons to buttonPanel
+        ADD buttonPanel to our main window
+
+    FUNCTION searchContacts() (this finds our friends)
+        SET query to whatever is typed in the searchField
+        SET selectedCategory to whatever is picked in the categoryBox
+
+        IF the category is "All" THEN
+            SET results to find all friends based on the query
+        ELSE
+            SET results to find friends in the selected category
+
+        CLEAR the contactListModel (let’s start fresh!)
+        FOR EACH contact IN results:
+            ADD contact to contactListModel (let’s show them!)
+
+    FUNCTION loadContacts() (this loads our friends into the list)
+        CLEAR contactListModel (start over)
+        FOR EACH contact IN phoneBook.getAllContacts():
+            ADD contact to contactListModel (bring them back!)
+
+    FUNCTION addNewContact() (let’s add a new friend!)
+        STRING name = ASK for the friend's name
+        STRING phoneNumber = ASK for the friend's phone number
+        STRING category = ASK for the friend type (choose Family, Friends, or Work)
+
+        IF name, phoneNumber, and category are not empty:
+            CREATE a new Contact with the name, phoneNumber, and category
+            ADD the newContact to the phoneBook
+            CALL loadContacts() (refresh the list!)
+            SHOW a message that says "Contact added successfully."
+
+    FUNCTION updateContact() (let’s change a friend's info)
+        INT selectedIndex = find out which friend is selected
+        IF no friend is selected THEN
+            SHOW a message saying "Please select a contact to update."
+            RETURN
+
+        Contact selectedContact = the friend you selected
+        STRING newPhoneNumber = ASK for a new phone number
+        STRING newCategory = ASK for a new category (Family, Friends, or Work)
+
+        IF newPhoneNumber and newCategory are not empty:
+            UPDATE the selectedContact with the new info
+            CALL loadContacts() (refresh the list!)
+            SHOW a message saying "Contact updated successfully."
+
+    FUNCTION deleteContact() (let’s remove a friend)
+        INT selectedIndex = find out which friend is selected
+        IF no friend is selected THEN
+            SHOW a message saying "Please select a contact to delete."
+            RETURN
+
+        Contact selectedContact = the friend you selected
+        IF the friend is removed from the phoneBook THEN
+            CALL loadContacts() (refresh the list!)
+            SHOW a message saying "Contact deleted successfully."
+        ELSE
+            SHOW a message saying "Contact not found."
+
+    FUNCTION main() (this starts our PhoneBookApp adventure)
+        LET the PhoneBookApp run in a safe way
+
+END CLASS
